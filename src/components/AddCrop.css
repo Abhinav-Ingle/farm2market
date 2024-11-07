@@ -1,0 +1,164 @@
+/* Main Container Styling */
+.add-crop-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Form Header */
+.add-crop-form h2 {
+  text-align: center;
+  color: #3c763d;
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+/* Form Group Styling */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.form-group textarea {
+  resize: none;
+  height: 100px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #3c763d;
+}
+
+/* Form Grid */
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+/* File Upload Button Styling */
+.upload-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  color: #333;
+  cursor: pointer;
+  text-align: center;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.upload-btn:hover {
+  background-color: #e9ecef;
+}
+
+/* Mobile number input styling */
+.country-code {
+  width: 60px;
+  display: inline-block;
+  text-align: center;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  font-size: 14px;
+  padding: 10px;
+}
+
+input[type="tel"] {
+  width: calc(100% - 60px);
+  padding: 10px;
+  border-radius: 0 4px 4px 0;
+  border: 1px solid #ccc;
+}
+
+/* Submit Button */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #3c763d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #2e5f2a;
+  box-shadow: 0 4px 12px rgba(60, 118, 61, 0.3);
+}
+
+/* Spacing and Typography */
+label {
+  font-weight: 500;
+  color: #2e5f2a;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #a6a6a6;
+}
+
+p {
+  font-size: 14px;
+  color: #757575;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Enhancing the select dropdowns */
+select {
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  color: #333;
+}
+
+select:focus {
+  outline: none;
+  border-color: #3c763d;
+  box-shadow: 0 0 8px rgba(60, 118, 61, 0.2);
+}
+
+/* General Responsiveness */
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+  }
+}
