@@ -9,7 +9,18 @@ module.exports = {
 
 module.exports = {
   content: [
-    './src//*.{js,jsx,ts,tsx}', // Add paths to your React files
+    './src//*.{js,jsx,ts,tsx}', 
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {},

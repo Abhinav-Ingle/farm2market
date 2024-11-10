@@ -5,7 +5,7 @@
     color: #2e7d32;
     text-align: center;
     padding: 40px;
-    background-image: url('C:\Users\Mahesh Dabhade\Desktop\New folder\farm2market\src\Assets\aboutus Bg.jpeg'); /* Add a farm-related background image */
+    background-image: url('C:\Users\HP\OneDrive\Desktop\farm2market\src\Assets\aboutus Bg.jpeg'); /* Add a farm-related background image */
     background-size: cover;
     background-position: center;
     border-radius: 12px;
@@ -76,7 +76,7 @@
   
   /* Full page background (optional if you want to use it on the entire section) */
   .full-page-bg {
-    background-image: url('C:\Users\Mahesh Dabhade\Desktop\New folder\farm2market\src\Assets\aboutus Bg.jpeg'); /* Full background image */
+    background-image: url('C:\Users\HP\OneDrive\Desktop\farm2market\src\Assets\aboutus Bg.jpeg'); /* Full background image */
     background-size: cover;
     background-position: center;
     min-height: 100vh;

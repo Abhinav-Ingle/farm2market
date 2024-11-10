@@ -1,287 +1,171 @@
 import React, { useState } from 'react';
-import { Drawer, List, ListItem, ListItemText, ListItemIcon, IconButton, Toolbar, AppBar, Typography, CssBaseline, Grid, Card, CardContent, Button, BottomNavigation, BottomNavigationAction } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Home, ListAlt, Info, ExitToApp, Add, Person } from '@mui/icons-material'; // Import the required icons
 import { useNavigate, Outlet } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Import toastify CSS
-
-const drawerWidth = 240;
+import { Menu, Home, ListChecks, Info, LogOut, Plus, UserCircle2, Leaf } from 'lucide-react';
 
 const Dashboard = () => {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(''); // State to manage bottom navigation
-
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
-
   const navigate = useNavigate();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem('user');
-    toast.success('Successfully logged out!', { position: "top-right" });
     navigate('/');
   };
 
-  const handleNavigation = (path, message) => {
+  const handleNavigation = (path) => {
     navigate(path);
-    toast.info(message, { position: "top-right" });
+    setIsDrawerOpen(false);
   };
 
-  // Card styles for agriculture theme
-  const cardStyle = {
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    height: '200px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: '16px',
-    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-    position: 'relative',
-  };
-
-  // Title and description styles
-  const titleStyle = {
-    fontSize: '24px',
-    fontWeight: 'bold',
-    zIndex: 1,
-    textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)', // Shadow for text readability
-    color: '#FFFFFF', // Set title color to white
-  };
-
-  const descriptionStyle = {
-    fontSize: '16px',
-    zIndex: 1,
-    textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)',
-    color: '#FFFFFF', // Set description color to white
-  };
-
-  // Styles for each card based on the section
-  const cardStyles = {
-    listings: {
-      backgroundColor: '#388E3C',  // #C5E1A5 with 5% opacity (My Listings)
-    },
-    cropInfo: {
-      backgroundColor: '#388E3C',  // Same color with 5% opacity (Crop Information)
-    },
-    aboutUs: {
-      backgroundColor: '#388E3C',  // Same color with 5% opacity (About Us)
-    },
-    logout: {
-      backgroundColor: '#388E3C',  // Same color with 5% opacity (Logout)
-    },
-  };
-
-  const overlayStyle = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Dark overlay for better text visibility
-    borderRadius: '16px',
-  };
+  const menuItems = [
+    { icon: ListChecks, label: 'My Listings', path: '/my-listings' },
+    { icon: Home, label: 'Crop Information', path: '/crop-info' },
+    { icon: Info, label: 'About Us', path: '/about-us' },
+  ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <CssBaseline />
+    <div className="min-h-screen bg-slate-50">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
+        <div className="flex items-center justify-between px-4 py-3 max-w-7xl mx-auto">
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+              className="p-2 text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+            <div className="flex items-center">
+              <Leaf className="h-6 w-6 text-emerald-500 mr-2" />
+              <h1 className="text-xl font-bold text-slate-800">Farm2Market</h1>
+            </div>
+          </div>
+        </div>
+      </header>
 
-      {/* AppBar Component */}
-      <AppBar position="fixed" style={{ zIndex: 1400, width: '100%', backgroundColor: '#3ed70b' }}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={toggleDrawer}
-            sx={{ marginRight: '16px' }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Farm2Market Dashboard
-          </Typography>
-        </Toolbar>
-      </AppBar>
-
-      {/* Drawer Component */}
-      <Drawer
-        variant="temporary" // Temporary drawer that can be closed
-        open={open} // Control drawer visibility based on state
-        onClose={toggleDrawer} // Close drawer on click outside
-        sx={{
-          '& .MuiDrawer-paper': { width: drawerWidth },
-        }}
-      >
-        <Toolbar /> {/* Empty toolbar for spacing under AppBar */}
-        <List>
-          <ListItem button onClick={() => handleNavigation('/my-listings', 'Navigating to My Listings')}>
-            <ListItemIcon><ListAlt /></ListItemIcon>
-            <ListItemText primary="My Listings" />
-          </ListItem>
-          <ListItem button onClick={() => handleNavigation('/crop-info', 'Navigating to Crop Information')}>
-            <ListItemIcon><Home /></ListItemIcon>
-            <ListItemText primary="Crop Information" />
-          </ListItem>
-          <ListItem button onClick={() => handleNavigation('/about-us', 'Navigating to About Us')}>
-            <ListItemIcon><Info /></ListItemIcon>
-            <ListItemText primary="About Us" />
-          </ListItem>
-          <ListItem button onClick={handleLogout}>
-            <ListItemIcon><ExitToApp /></ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItem>
-        </List>
-      </Drawer>
+      {/* Drawer/Sidebar */}
+      {isDrawerOpen && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+            onClick={() => setIsDrawerOpen(false)}
+          />
+          <div className="fixed left-0 top-0 bottom-0 w-72 bg-white z-50 shadow-xl animate-in slide-in-from-left">
+            <div className="p-6">
+              <div className="flex items-center mb-8">
+                <Leaf className="h-8 w-8 text-emerald-500 mr-2" />
+                <h2 className="text-2xl font-bold text-slate-800">Farm2Market</h2>
+              </div>
+              <nav className="space-y-2">
+                {menuItems.map((item) => (
+                  <button
+                    key={item.path}
+                    onClick={() => handleNavigation(item.path)}
+                    className="w-full flex items-center px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-colors"
+                  >
+                    <item.icon className="h-5 w-5 mr-3" />
+                    <span className="text-lg">{item.label}</span>
+                  </button>
+                ))}
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl transition-colors mt-4"
+                >
+                  <LogOut className="h-5 w-5 mr-3" />
+                  <span className="text-lg">Logout</span>
+                </button>
+              </nav>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Main Content */}
-      <main style={{ flexGrow: 1, padding: '24px', marginTop: '64px', flex: 1 }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            {/* Card for My Listings */}
-            <Card style={{ ...cardStyle, ...cardStyles.listings }}>
-              <div style={overlayStyle}></div>
-              <CardContent>
-                <Typography style={titleStyle}>
-                  My Listings
-                </Typography>
-                <Typography style={descriptionStyle}>
-                  View and manage your crop listings for sale.
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="success"
-                  onClick={() => handleNavigation('/my-listings', 'Navigating to My Listings')}
-                  style={{ marginTop: '16px', zIndex: 1 }}
-                >
-                  Explore
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            {/* Card for Crop Info */}
-            <Card style={{ ...cardStyle, ...cardStyles.cropInfo }}>
-              <div style={overlayStyle}></div>
-              <CardContent>
-                <Typography style={titleStyle}>
-                  Crop Information
-                </Typography>
-                <Typography style={descriptionStyle}>
-                  Discover detailed information on various crops.
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="success"
-                  onClick={() => handleNavigation('/crop-info', 'Navigating to Crop Information')}
-                  style={{ marginTop: '16px', zIndex: 1 }}
-                >
-                  Learn More
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            {/* Card for About Us */}
-            <Card style={{ ...cardStyle, ...cardStyles.aboutUs }}>
-              <div style={overlayStyle}></div>
-              <CardContent>
-                <Typography style={titleStyle}>
-                  About Us
-                </Typography>
-                <Typography style={descriptionStyle}>
-                  Learn more about our mission and team.
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="success"
-                  onClick={() => handleNavigation('/about-us', 'Navigating to About Us')}
-                  style={{ marginTop: '16px', zIndex: 1 }}
-                >
-                  Read More
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            {/* Card for Logout */}
-            <Card style={{ ...cardStyle, ...cardStyles.logout }}>
-              <div style={overlayStyle}></div>
-              <CardContent>
-                <Typography style={titleStyle}>
-                  Logout
-                </Typography>
-                <Typography style={descriptionStyle}>
-                  Click here to log out of the dashboard.
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="error"
-                  onClick={handleLogout}
-                  style={{ marginTop: '16px', zIndex: 1 }}
-                >
-                  Logout
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-
-        <Outlet /> {/* This is where the content of My Listings, Crop Info, etc. will be displayed */}
+      <main className="max-w-7xl mx-auto px-4 pt-20 pb-24">
+        <h2 className="text-2xl font-bold text-slate-800 mb-6 mt-8">Welcome back, Farmer!</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[
+            {
+              title: 'My Listings',
+              description: 'View and manage your crop listings for sale',
+              icon: ListChecks,
+              path: '/my-listings',
+              stats: '12 Active Listings'
+            },
+            {
+              title: 'Crop Information',
+              description: 'Discover detailed information on various crops',
+              icon: Home,
+              path: '/crop-info',
+              stats: '50+ Crop Varieties'
+            },
+            {
+              title: 'About Us',
+              description: 'Learn more about our mission and team',
+              icon: Info,
+              path: '/about-us',
+              stats: 'Since 2023'
+            }
+          ].map((item) => (
+            <div 
+              key={item.path}
+              className="group relative overflow-hidden rounded-2xl bg-white shadow-sm border border-slate-200 hover:shadow-lg hover:border-emerald-200 transition-all duration-300"
+            >
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-emerald-50 rounded-xl group-hover:bg-emerald-100 transition-colors">
+                      <item.icon className="h-6 w-6 text-emerald-600" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-slate-800">{item.title}</h3>
+                  </div>
+                </div>
+                <p className="text-slate-600 mb-4">{item.description}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-slate-500">{item.stats}</span>
+                  <button 
+                    onClick={() => handleNavigation(item.path)}
+                    className="px-4 py-2 bg-emerald-50 text-emerald-600 rounded-lg hover:bg-emerald-100 transition-colors font-medium"
+                  >
+                    Explore
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <Outlet />
       </main>
 
-      {/* Bottom Navigation Bar */}
-      <BottomNavigation
-        style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          backgroundColor: '#3ed70b',
-          zIndex: 1000,
-          borderTopLeftRadius: '100px',  // Round top-left corner
-          borderTopRightRadius: '100px', // Round top-right corner
-          height: '56px', // Adjust the height to match the section size
-          width: '80%',
-          margin: '0 auto',
-        }}
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      >
-        <BottomNavigationAction
-          label="Home"
-          icon={<Home />}
-          onClick={() => handleNavigation('/dashboard', 'Navigating to Home')} // Handle home navigation
-        />
-      
-      <BottomNavigationAction
-  label="Add"
-  icon={
-    <div style={{ backgroundColor: 'white', borderRadius: '50%', padding: '15px', border: '3px solid #338E3C' }}> {/* Increase padding for a larger circular background */}
-      <Add style={{ color: '#4CAF50', fontSize: '40px' }} /> {/* Increase font size for the icon */}
-    </div>
-  }
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white shadow-lg rounded-full border border-slate-200 px-6">
+        <div className="flex items-center space-x-8 py-3">
+          <button
+            onClick={() => handleNavigation('/dashboard')}
+            className="flex flex-col items-center text-slate-600 hover:text-emerald-600 transition-colors"
+          >
+            <Home className="h-6 w-6" />
+            <span className="text-xs mt-1">Home</span>
+          </button>
+          
+          <button
+            onClick={() => handleNavigation('/add')}
+            className="flex flex-col items-center relative -mt-8"
+          >
+            <div className="p-4 rounded-full bg-emerald-500 text-white shadow-lg hover:bg-emerald-600 transition-colors">
+              <Plus className="h-6 w-6" />
+            </div>
+            <span className="text-xs mt-1 text-slate-600">Add</span>
+          </button>
 
-
-          onClick={() => handleNavigation('/add', 'Navigating to Add')}
-        />
-        <BottomNavigationAction
-          label="Profile"
-          icon={<Person />}
-          onClick={() => handleNavigation('/', 'Navigating to Profile')} // Handle profile navigation
-        />
-      </BottomNavigation>
-
-      {/* Toast Container for showing toast notifications */}
-      <ToastContainer />
+          <button
+            onClick={() => handleNavigation('/profile')}
+            className="flex flex-col items-center text-slate-600 hover:text-emerald-600 transition-colors"
+          >
+            <UserCircle2 className="h-6 w-6" />
+            <span className="text-xs mt-1">Profile</span>
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
